@@ -1,0 +1,1187 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>高中跨校資安實務素養挑戰賽 - 編碼與解碼</title>
+    <link href="https://fonts.googleapis.com/css2?family=Kaisei+Decol&family=Yomogi&family=Zen+Kurenaido&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="./assets/style.css">
+</head>
+<body>
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <h2 id="sidebar-title">編解碼與加解密</h2>
+            <p>教育部跨領域資通訊安全實務人才培育計畫</p>
+        </div>
+        
+        <ul class="nav-menu">
+            <li class="nav-item active" data-slide="1"><a href="#">簡介</a></li>
+            <li class="nav-item" data-slide="2"><a href="#">編碼與解碼理論</a></li>
+            <li class="nav-item" data-slide="3"><a href="#">字元編碼 (ASCII)</a></li>
+            <li class="nav-item" data-slide="4"><a href="#">Base64 編碼</a></li>
+            <li class="nav-item" data-slide="5"><a href="#">摩斯密碼 (Morse Code)</a></li>
+            <li class="nav-item" data-slide="6"><a href="#">凱撒密碼 (Caesar Cipher)</a></li>
+            <li class="nav-item" data-slide="7"><a href="#">ROT 加密法</a></li>
+            <li class="nav-item" data-slide="8"><a href="#">瑪麗·史都華密碼</a></li>
+            <li class="nav-item" data-slide="9"><a href="#">維吉尼爾密碼</a></li>
+            <li class="nav-item" data-slide="10"><a href="#">挑戰題目</a></li>
+        </ul>
+    </div>
+    
+    <div class="main-content">
+        <!-- 簡介 -->
+        <div class="slide active" id="slide-1">
+            <div class="slide-header">
+                <i class="fas fa-shield-alt"></i>
+                <h2>高中跨校資安實務素養挑戰賽</h2>
+            </div>
+            
+            <div class="hand-drawn-box">
+                <div class="concept-title">
+                    <i class="fas fa-info-circle"></i>
+                    課程簡介
+                </div>
+                <p class="content-text">
+                    歡迎參加<span class="highlight">高中跨校資安實務素養挑戰賽</span>！本單元將以實作範例複習編碼與解碼技術，例如：Base64、Morse Code等，並通過線上工具講授實作範例題解過程。
+                </p>
+                <p class="content-text">
+                    這些知識與技能在資安領域中非常重要，許多資安挑戰賽和CTF比賽中都會出現相關題目。掌握這些基礎編碼和加密技術，將幫助你更好地理解資安原理！
+                </p>
+            </div>
+            
+            <div class="note-box">
+                <p>在計算機的世界有許多編碼(encoding)與解碼(decoding)的機制與應用，它們在資訊安全領域中扮演重要角色。</p>
+            </div>
+            
+            <div class="method-comparison">
+                <div class="method-card">
+                    <h3><i class="fas fa-exchange-alt"></i> 編碼 (Encoding)</h3>
+                    <p>為了資料傳輸、儲存方便或格式轉換（非保密用途）</p>
+                    <div class="key-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>例如：Base64</span>
+                    </div>
+                </div>
+                
+                <div class="method-card">
+                    <h3><i class="fas fa-lock"></i> 加密 (Encryption)</h3>
+                    <p>為了資訊保密與安全，只有授權者能還原原文</p>
+                    <div class="key-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>例如：凱薩加密、ROT47</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="challenge-box">
+                <h3><i class="fas fa-puzzle-piece"></i> 學習目標</h3>
+                <ul>
+                    <li>了解基本編碼與加密概念</li>
+                    <li>熟悉常見的編碼技術：ASCII、Base64、Morse Code</li>
+                    <li>學習古典加密法：凱撒密碼、ROT加密、瑪麗·史都華密碼、維吉尼爾密碼</li>
+                    <li>運用線上工具解決實際問題</li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- 編碼與解碼理論 -->
+        <div class="slide" id="slide-2">
+            <div class="slide-header">
+                <i class="fas fa-book"></i>
+                <h2>編碼與解碼理論</h2>
+            </div>
+            
+            <div class="hand-drawn-box">
+                <div class="concept-title">
+                    <i class="fas fa-lightbulb"></i>
+                    基本概念
+                </div>
+                <p class="content-text">
+                    在計算機的世界有許多<span class="highlight">編碼(encoding)</span>與<span class="highlight">解碼(decoding)</span>的機制與應用。理解它們之間的區別非常重要。
+                </p>
+            </div>
+            
+            <div class="two-column">
+                <div class="column">
+                    <div class="example-card">
+                        <div class="example-card-header">
+                            <i class="fas fa-exchange-alt"></i>
+                            <h3>編碼 (Encoding)</h3>
+                        </div>
+                        <div class="example-card-content">
+                            <p>為了資料傳輸、儲存方便或格式轉換（非保密用途）</p>
+                            <ul>
+                                <li>主要目的：資料傳輸、儲存、格式轉換</li>
+                                <li>不考慮安全性，人人可以解碼</li>
+                                <li>例如：<span class="highlight">Base64</span>、ASCII、UTF-8</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="column">
+                    <div class="example-card">
+                        <div class="example-card-header">
+                            <i class="fas fa-lock"></i>
+                            <h3>加密 (Encryption)</h3>
+                        </div>
+                        <div class="example-card-content">
+                            <p>為了資訊保密與安全，只有授權者能還原原文</p>
+                            <ul>
+                                <li>主要目的：資訊安全與保密</li>
+                                <li>需要密鑰(金鑰)或特殊方法解密</li>
+                                <li>例如：<span class="highlight">凱撒加密</span>、<span class="highlight">ROT47</span>、AES、RSA</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="note-box">
+                <p><strong>重要提醒：</strong> Base64 不是加密演算法！它是一種編碼方式，目的是為了方便數據的傳輸和存儲，而非保密。</p>
+            </div>
+            
+            <div class="process-flow">
+                <div class="process-step">
+                    <h4>原始資料</h4>
+                    <p>純文字、二進制資料</p>
+                </div>
+                <div class="process-step">
+                    <h4>編碼/加密</h4>
+                    <p>轉換為特定格式</p>
+                </div>
+                <div class="process-step">
+                    <h4>傳輸/儲存</h4>
+                    <p>安全地傳送資料</p>
+                </div>
+                <div class="process-step">
+                    <h4>解碼/解密</h4>
+                    <p>還原為原始資料</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 字元編碼 (ASCII) -->
+        <div class="slide" id="slide-3">
+            <div class="slide-header">
+                <i class="fas fa-font"></i>
+                <h2>字元編碼 (Character Encoding)</h2>
+            </div>
+            
+            <div class="hand-drawn-box">
+                <div class="concept-title">
+                    <i class="fas fa-keyboard"></i>
+                    ASCII 編碼
+                </div>
+                <p class="content-text">
+                    ASCII（American Standard Code for Information Interchange，美國資訊交換標準程式碼）是最基本的字元編碼系統，用於在電腦系統中表示文字。
+                </p>
+            </div>
+            
+            <div class="ascii-card">
+                <div class="ascii-card-header">
+                    <h3>ASCII 特性</h3>
+                </div>
+                <div class="ascii-card-content">
+                    <ul>
+                        <li>發展自電報編碼</li>
+                        <li>包含 128 個字元（7位元表示）</li>
+                        <li>擴展ASCII（Extended ASCII）增加了額外的 128 個字元（8位元表示）</li>
+                        <li>只能表示英文字母、數字和部分符號，不支援中文等其他語言</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="example-card">
+                <div class="example-card-header">
+                    <i class="fas fa-code"></i>
+                    <h3>ASCII 編碼示例</h3>
+                </div>
+                <div class="example-card-content">
+                    <p>每個字元都對應一個特定的數值：</p>
+                    <div class="ascii-example">
+                        字元 'A' 對應 ASCII 值 65 (十進制) = 01000001 (二進制)
+                        字元 'a' 對應 ASCII 值 97 (十進制) = 01100001 (二進制)
+                        字元 '0' 對應 ASCII 值 48 (十進制) = 00110000 (二進制)
+                    </div>
+                </div>
+            </div>
+            
+            <div class="two-column">
+                <div class="column">
+                    <div class="hand-drawn-box">
+                        <div class="concept-title">
+                            <i class="fas fa-microchip"></i>
+                            資料儲存基本單位
+                        </div>
+                        <ul>
+                            <li>1 bit：一個二進制位元，只能儲存 0 或 1</li>
+                            <li>8 bits = 1 byte：一個位元組，基本的資料儲存單位</li>
+                            <li>1 byte = 1 word：一般來說一個字元需要一個位元組來表示</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="column">
+                    <div class="hand-drawn-box">
+                        <div class="concept-title">
+                            <i class="fas fa-exchange-alt"></i>
+                            字元編碼過程
+                        </div>
+                        <div class="image-container">
+                            <img src="./assets/images/encode-decode.png" alt="字元編碼示意圖" />
+                        </div>
+                        <p class="content-text">
+                            字元編碼是將人類可讀的字元映射到一組唯一的數字的過程，使電腦能夠處理文字資料。
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Base64 編碼 -->
+        <div class="slide" id="slide-4">
+            <div class="slide-header">
+                <i class="fas fa-exchange-alt"></i>
+                <h2>Base64 編碼</h2>
+            </div>
+            
+            <div class="hand-drawn-box">
+                <div class="concept-title">
+                    <i class="fas fa-info-circle"></i>
+                    Base64 概述
+                </div>
+                <p class="content-text">
+                    Base64 是一種將二進制數據轉換為64個可列印ASCII字元的編碼方式。它<span class="highlight">不是加密方法</span>，而是一種資料表示形式。
+                </p>
+            </div>
+            
+            <div class="note-box">
+                <p><strong>重要提醒：</strong> Base64 不是加密演算法！Base64 不是加密演算法！Base64 不是加密演算法！（重要的事情說三遍）</p>
+            </div>
+            
+            <div class="two-column flex-col">
+                <div class="column">
+                    <div class="example-card">
+                        <div class="example-card-header">
+                            <i class="fas fa-code"></i>
+                            <h3>Base64 特性</h3>
+                        </div>
+                        <div class="example-card-content">
+                            <ul>
+                                <li>使用 64 個可列印字元進行編碼</li>
+                                <li>便於攜帶與儲存</li>
+                                <li>常用於多用途網際網路郵件擴充 (MIME)</li>
+                                <li>用於在只能處理文字的環境中傳輸二進制資料</li>
+                                <li>使用 "=" 作為填充字元</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="column">
+                    <div class="example-card">
+                        <div class="example-card-header">
+                            <i class="fas fa-table"></i>
+                            <h3>Base64 編碼表</h3>
+                        </div>
+                        <div class="example-card-content">
+                            <div class="table-container">
+                                <table class="base64-table">
+                                    <tr>
+                                        <th>索引</th>
+                                        <th>字元</th>
+                                        <th>索引</th>
+                                        <th>字元</th>
+                                        <th>索引</th>
+                                        <th>字元</th>
+                                        <th>索引</th>
+                                        <th>字元</th>
+                                        <th>索引</th>
+                                        <th>字元</th>
+                                        <th>索引</th>
+                                        <th>字元</th>
+                                        <th>索引</th>
+                                        <th>字元</th>
+                                        <th>索引</th>
+                                        <th>字元</th>
+                                    </tr>
+                                    <tr>
+                                        <td class="index-cell">0 (0x00)</td>
+                                        <td class="char-cell">A</td>
+                                        <td class="index-cell">1 (0x01)</td>
+                                        <td class="char-cell">B</td>
+                                        <td class="index-cell">2 (0x02)</td>
+                                        <td class="char-cell">C</td>
+                                        <td class="index-cell">3 (0x03)</td>
+                                        <td class="char-cell">D</td>
+                                        <td class="index-cell">4 (0x04)</td>
+                                        <td class="char-cell">E</td>
+                                        <td class="index-cell">5 (0x05)</td>
+                                        <td class="char-cell">F</td>
+                                        <td class="index-cell">6 (0x06)</td>
+                                        <td class="char-cell">G</td>
+                                        <td class="index-cell">7 (0x07)</td>
+                                        <td class="char-cell">H</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="index-cell">8 (0x08)</td>
+                                        <td class="char-cell">I</td>
+                                        <td class="index-cell">9 (0x09)</td>
+                                        <td class="char-cell">J</td>
+                                        <td class="index-cell">10 (0x0A)</td>
+                                        <td class="char-cell">K</td>
+                                        <td class="index-cell">11 (0x0B)</td>
+                                        <td class="char-cell">L</td>
+                                        <td class="index-cell">12 (0x0C)</td>
+                                        <td class="char-cell">M</td>
+                                        <td class="index-cell">13 (0x0D)</td>
+                                        <td class="char-cell">N</td>
+                                        <td class="index-cell">14 (0x0E)</td>
+                                        <td class="char-cell">O</td>
+                                        <td class="index-cell">15 (0x0F)</td>
+                                        <td class="char-cell">P</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="index-cell">16 (0x10)</td>
+                                        <td class="char-cell">Q</td>
+                                        <td class="index-cell">17 (0x11)</td>
+                                        <td class="char-cell">R</td>
+                                        <td class="index-cell">18 (0x12)</td>
+                                        <td class="char-cell">S</td>
+                                        <td class="index-cell">19 (0x13)</td>
+                                        <td class="char-cell">T</td>
+                                        <td class="index-cell">20 (0x14)</td>
+                                        <td class="char-cell">U</td>
+                                        <td class="index-cell">21 (0x15)</td>
+                                        <td class="char-cell">V</td>
+                                        <td class="index-cell">22 (0x16)</td>
+                                        <td class="char-cell">W</td>
+                                        <td class="index-cell">23 (0x17)</td>
+                                        <td class="char-cell">X</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="index-cell">24 (0x18)</td>
+                                        <td class="char-cell">Y</td>
+                                        <td class="index-cell">25 (0x19)</td>
+                                        <td class="char-cell">Z</td>
+                                        <td class="index-cell">26 (0x1A)</td>
+                                        <td class="char-cell">a</td>
+                                        <td class="index-cell">27 (0x1B)</td>
+                                        <td class="char-cell">b</td>
+                                        <td class="index-cell">28 (0x1C)</td>
+                                        <td class="char-cell">c</td>
+                                        <td class="index-cell">29 (0x1D)</td>
+                                        <td class="char-cell">d</td>
+                                        <td class="index-cell">30 (0x1E)</td>
+                                        <td class="char-cell">e</td>
+                                        <td class="index-cell">31 (0x1F)</td>
+                                        <td class="char-cell">f</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="index-cell">32 (0x20)</td>
+                                        <td class="char-cell">g</td>
+                                        <td class="index-cell">33 (0x21)</td>
+                                        <td class="char-cell">h</td>
+                                        <td class="index-cell">34 (0x22)</td>
+                                        <td class="char-cell">i</td>
+                                        <td class="index-cell">35 (0x23)</td>
+                                        <td class="char-cell">j</td>
+                                        <td class="index-cell">36 (0x24)</td>
+                                        <td class="char-cell">k</td>
+                                        <td class="index-cell">37 (0x25)</td>
+                                        <td class="char-cell">l</td>
+                                        <td class="index-cell">38 (0x26)</td>
+                                        <td class="char-cell">m</td>
+                                        <td class="index-cell">39 (0x27)</td>
+                                        <td class="char-cell">n</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="index-cell">40 (0x28)</td>
+                                        <td class="char-cell">o</td>
+                                        <td class="index-cell">41 (0x29)</td>
+                                        <td class="char-cell">p</td>
+                                        <td class="index-cell">42 (0x2A)</td>
+                                        <td class="char-cell">q</td>
+                                        <td class="index-cell">43 (0x2B)</td>
+                                        <td class="char-cell">r</td>
+                                        <td class="index-cell">44 (0x2C)</td>
+                                        <td class="char-cell">s</td>
+                                        <td class="index-cell">45 (0x2D)</td>
+                                        <td class="char-cell">t</td>
+                                        <td class="index-cell">46 (0x2E)</td>
+                                        <td class="char-cell">u</td>
+                                        <td class="index-cell">47 (0x2F)</td>
+                                        <td class="char-cell">v</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="index-cell">48 (0x30)</td>
+                                        <td class="char-cell">w</td>
+                                        <td class="index-cell">49 (0x31)</td>
+                                        <td class="char-cell">x</td>
+                                        <td class="index-cell">50 (0x32)</td>
+                                        <td class="char-cell">y</td>
+                                        <td class="index-cell">51 (0x33)</td>
+                                        <td class="char-cell">z</td>
+                                        <td class="index-cell">52 (0x34)</td>
+                                        <td class="char-cell">0</td>
+                                        <td class="index-cell">53 (0x35)</td>
+                                        <td class="char-cell">1</td>
+                                        <td class="index-cell">54 (0x36)</td>
+                                        <td class="char-cell">2</td>
+                                        <td class="index-cell">55 (0x37)</td>
+                                        <td class="char-cell">3</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="index-cell">56 (0x38)</td>
+                                        <td class="char-cell">4</td>
+                                        <td class="index-cell">57 (0x39)</td>
+                                        <td class="char-cell">5</td>
+                                        <td class="index-cell">58 (0x3A)</td>
+                                        <td class="char-cell">6</td>
+                                        <td class="index-cell">59 (0x3B)</td>
+                                        <td class="char-cell">7</td>
+                                        <td class="index-cell">60 (0x3C)</td>
+                                        <td class="char-cell">8</td>
+                                        <td class="index-cell">61 (0x3D)</td>
+                                        <td class="char-cell">9</td>
+                                        <td class="index-cell">62 (0x3E)</td>
+                                        <td class="char-cell special-char">+</td>
+                                        <td class="index-cell">63 (0x3F)</td>
+                                        <td class="char-cell special-char">/</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="index-cell">填充</td>
+                                        <td class="char-cell special-char">=</td>
+                                        <td colspan="14"></td>
+                                    </tr>
+                                </table>                          
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="example-card">
+                <div class="example-card-header">
+                    <i class="fas fa-cogs"></i>
+                    <h3>Base64 編碼過程</h3>
+                </div>
+                <div class="example-card-content">
+                    <p>以 "Man" 為例：</p>
+                    <ol>
+                        <li>將每個字元轉換為 ASCII 值：M (77), a (97), n (110)</li>
+                        <li>將 ASCII 值轉換為 8 位二進制：01001101 01100001 01101110</li>
+                        <li>將 24 位二進制重新分組為 6 位一組：010011 010110 000101 101110</li>
+                        <li>將每組 6 位二進制轉換為對應的 Base64 字元：T W F u</li>
+                    </ol>
+                    <p>結果："Man" 的 Base64 編碼為 "TWFu"</p>
+                </div>
+            </div>
+            
+            <div class="challenge-box">
+                <h3><i class="fas fa-puzzle-piece"></i> 應用場景</h3>
+                <ul>
+                    <li>電子郵件附件編碼 (MIME)</li>
+                    <li>在 URL 中傳輸二進制資料</li>
+                    <li>資料儲存和傳輸中的二進制表示</li>
+                    <li>作為基本的資料格式轉換機制</li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- 摩斯密碼 (Morse Code) -->
+        <div class="slide" id="slide-5">
+            <div class="slide-header">
+                <i class="fas fa-broadcast-tower"></i>
+                <h2>摩斯密碼 (Morse Code)</h2>
+            </div>
+            
+            <div class="hand-drawn-box">
+                <div class="concept-title">
+                    <i class="fas fa-info-circle"></i>
+                    摩斯密碼概述
+                </div>
+                <p class="content-text">
+                    摩斯密碼是一種使用點（.）和劃（-）的組合來表示字母、數字和標點符號的編碼方式。它最初用於電報通訊，是早期遠距離通訊的重要編碼方法。
+                </p>
+            </div>
+            
+            <div class="example-card">
+                <div class="example-card-header">
+                    <i class="fas fa-table"></i>
+                    <h3>國際摩斯密碼表</h3>
+                </div>
+                <div class="example-card-content">
+                    <div class="table-container">
+                        <table>
+                            <tr>
+                                <th>字元</th><th>摩斯密碼</th>
+                                <th>字元</th><th>摩斯密碼</th>
+                                <th>字元</th><th>摩斯密碼</th>
+                            </tr>
+                            <tr>
+                                <td>A</td><td>• —</td>
+                                <td>N</td><td>— •</td>
+                                <td>1</td><td>• — — — —</td>
+                            </tr>
+                            <tr>
+                                <td>B</td><td>— • • •</td>
+                                <td>O</td><td>— — —</td>
+                                <td>2</td><td>• • — — —</td>
+                            </tr>
+                            <tr>
+                                <td>C</td><td>— • — •</td>
+                                <td>P</td><td>• — — •</td>
+                                <td>3</td><td>• • • — —</td>
+                            </tr>
+                            <tr>
+                                <td>D</td><td>— • •</td>
+                                <td>Q</td><td>— — • —</td>
+                                <td>4</td><td>• • • • —</td>
+                            </tr>
+                            <tr>
+                                <td>E</td><td>•</td>
+                                <td>R</td><td>• — •</td>
+                                <td>5</td><td>• • • • •</td>
+                            </tr>
+                            <tr>
+                                <td>...</td><td>...</td>
+                                <td>...</td><td>...</td>
+                                <td>...</td><td>...</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="two-column">
+                <div class="column">
+                    <div class="example-card">
+                        <div class="example-card-header">
+                            <i class="fas fa-code"></i>
+                            <h3>摩斯密碼特性</h3>
+                        </div>
+                        <div class="example-card-content">
+                            <ul>
+                                <li>由「點」(•)、「劃」(-)和空格組成</li>
+                                <li>一個點的長度為一個單位時間</li>
+                                <li>一個劃的長度為三個單位時間</li>
+                                <li>點劃之間的間隔為一個單位時間</li>
+                                <li>字元內部點劃間的間隔為一個單位時間</li>
+                                <li>字元之間的間隔為三個單位時間</li>
+                                <li>單詞之間的間隔為七個單位時間</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="column">
+                    <div class="example-card">
+                        <div class="example-card-header">
+                            <i class="fas fa-lightbulb"></i>
+                            <h3>摩斯密碼範例</h3>
+                        </div>
+                        <div class="example-card-content">
+                            <p>SOS 國際求救信號：</p>
+                            <div class="code-example">
+• • • — — — • • •
+S     O     S
+                            </div>
+                            <p>"I love you" 的摩斯密碼：</p>
+                            <div class="code-example">
+• • / • — — — • / • — — • / • — — •
+I     L      O     V      E
+                            
+— — — / — — — • • / • — • •
+Y      O      U
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="challenge-box">
+                <h3><i class="fas fa-puzzle-piece"></i> 實作提示</h3>
+                <p>解碼摩斯密碼時可以使用線上工具，例如：</p>
+                <ul>
+                    <li>https://morsecode.scphillips.com/translator.html</li>
+                    <li>或使用摩斯密碼表手動解碼</li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- 凱撒密碼 (Caesar Cipher) -->
+        <div class="slide" id="slide-6">
+            <div class="slide-header">
+                <i class="fas fa-lock"></i>
+                <h2>凱撒密碼 (Caesar Cipher)</h2>
+            </div>
+            
+            <div class="hand-drawn-box">
+                <div class="concept-title">
+                    <i class="fas fa-info-circle"></i>
+                    凱撒密碼概述
+                </div>
+                <p class="content-text">
+                    凱撒密碼（又稱凱撒加密、凱撒變換、變換加密）是一種最簡單且最廣為人知的加密技術。凱撒密碼是一種替換加密技術，明文中的所有字母都在字母表上向後（或向前）按照一個固定數目進行偏移後被替換成密文。
+                </p>
+            </div>
+            
+            <div class="two-column">
+                <div class="column">
+                    <div class="example-card">
+                        <div class="example-card-header">
+                            <i class="fas fa-history"></i>
+                            <h3>歷史背景</h3>
+                        </div>
+                        <div class="example-card-content">
+                            <ul>
+                                <li>這個加密方法是以羅馬共和時期凱撒的名字命名的</li>
+                                <li>據稱當年凱撒曾用此方法與其將軍們進行聯繫</li>
+                                <li>是最早的加密技術之一</li>
+                                <li>也是了解現代密碼學基礎的入門知識</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="column">
+                    <div class="example-card">
+                        <div class="example-card-header">
+                            <i class="fas fa-cogs"></i>
+                            <h3>加密原理</h3>
+                        </div>
+                        <div class="example-card-content">
+                            <p>凱撒密碼的工作原理是將字母表中的每個字母向前或向後移動固定數量的位置。</p>
+                            <p>例如，位移量為3時：</p>
+                            <ul>
+                                <li>A → D</li>
+                                <li>B → E</li>
+                                <li>C → F</li>
+                                <li>...</li>
+                                <li>Z → C</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="example-card">
+                <div class="example-card-header">
+                    <i class="fas fa-code"></i>
+                    <h3>凱撒密碼範例</h3>
+                </div>
+                <div class="example-card-content">
+                    <p>以位移量（密鑰）= 3 為例：</p>
+                    <div class="table-container">
+                        <table>
+                            <tr>
+                                <th>明文</th>
+                                <td>H</td><td>E</td><td>L</td><td>L</td><td>O</td>
+                            </tr>
+                            <tr>
+                                <th>密文</th>
+                                <td>K</td><td>H</td><td>O</td><td>O</td><td>R</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <p>明文 "HELLO" 加密後變成 "KHOOR"</p>
+                </div>
+            </div>
+
+            <div class="hand-drawn-box">
+                <a href="./caesar-cipher-wheel.html" target="_blank" rel="noopener noreferrer"></a>
+                <div class="concept-title">
+                    <i class="fa-solid fa-gears"></i>
+                    線上凱薩密碼輪體驗
+                </div>
+                <p class="content-text center">
+                    <img src="./assets/images/caesar_cipher_wheel.png" alt="線上凱薩密碼輪">
+                </p>
+            </div>
+            
+            <div class="note-box">
+                <p><strong>安全性提醒：</strong> 凱撒密碼非常容易被破解，因為只有26種可能的密鑰（英文字母表有26個字母）。使用頻率分析就可以輕易破解凱撒密碼。</p>
+            </div>
+            
+            <div class="challenge-box">
+                <h3><i class="fas fa-puzzle-piece"></i> 實作提示</h3>
+                <p>許多線上工具可以幫助加密和解密凱撒密碼：</p>
+                <ul>
+                    <li>https://www.dcode.fr/caesar-cipher</li>
+                    <li>http://rumkin.com/tools/cipher/caesar.php</li>
+                </ul>
+                <p>破解方法：</p>
+                <ul>
+                    <li>暴力破解（嘗試所有可能的位移量）</li>
+                    <li>頻率分析（英文中E、T、A、O是最常見的字母）</li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- ROT 加密法 -->
+        <div class="slide" id="slide-7">
+            <div class="slide-header">
+                <i class="fas fa-sync-alt"></i>
+                <h2>ROT 加密法</h2>
+            </div>
+            
+            <div class="hand-drawn-box">
+                <div class="concept-title">
+                    <i class="fas fa-info-circle"></i>
+                    ROT 加密概述
+                </div>
+                <p class="content-text">
+                    ROT（Rotation Cipher）是將字母表中的字母依固定位移量進行輪替替換的加密方式。它是一種凱薩加密（Caesar Cipher）的變體。
+                </p>
+            </div>
+            
+            <div class="table-container">
+                <table>
+                    <tr>
+                        <th>名稱</th>
+                        <th>位移量</th>
+                        <th>特點</th>
+                    </tr>
+                    <tr>
+                        <td>ROT13</td>
+                        <td>13</td>
+                        <td>最常見，用於英文加密，可逆性強（加密兩次即還原）</td>
+                    </tr>
+                    <tr>
+                        <td>ROT5</td>
+                        <td>5</td>
+                        <td>只針對數字 0–9 進行位移</td>
+                    </tr>
+                    <tr>
+                        <td>ROT47</td>
+                        <td>47</td>
+                        <td>針對 ASCII 範圍 33–126（可印字符），可加密英文、數字、符號</td>
+                    </tr>
+                </table>
+            </div>
+            
+            <div class="two-column">
+                <div class="column">
+                    <div class="example-card">
+                        <div class="example-card-header">
+                            <i class="fas fa-code"></i>
+                            <h3>ROT 加密範例</h3>
+                        </div>
+                        <div class="example-card-content">
+                            <p>ROT13 範例：</p>
+                            <div class="table-container">
+                                <table>
+                                    <tr>
+                                        <th>明文</th>
+                                        <td>H</td><td>E</td><td>L</td><td>L</td><td>O</td>
+                                    </tr>
+                                    <tr>
+                                        <th>密文</th>
+                                        <td>U</td><td>R</td><td>Y</td><td>Y</td><td>B</td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <p>明文 "HELLO" 加密後變成 "URYYB"</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="column">
+                    <div class="example-card">
+                        <div class="example-card-header">
+                            <i class="fas fa-lightbulb"></i>
+                            <h3>ROT 的特性</h3>
+                        </div>
+                        <div class="example-card-content">
+                            <div class="key-feature">
+                                <i class="fas fa-check-circle"></i>
+                                <span>簡單易懂：可用程式輕鬆實作</span>
+                            </div>
+                            <div class="key-feature">
+                                <i class="fas fa-check-circle"></i>
+                                <span>對稱加密：加密兩次會還原原文（ROT13, ROT47）</span>
+                            </div>
+                            <div class="key-feature">
+                                <i class="fas fa-times-circle"></i>
+                                <span>不安全：容易被暴力破解，無法用於真正的資料保護</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="note-box">
+                <p><strong>ROT13 特點：</strong> ROT13 在英文字母表中將每個字母向前移動13位，因為英文字母表剛好有26個字母，所以應用 ROT13 兩次會恢復原來的文字。這使它成為一種簡單的自反式加密。</p>
+            </div>
+            
+            <div class="example-card">
+                <div class="example-card-header">
+                    <i class="fas fa-cogs"></i>
+                    <h3>ROT47 原理</h3>
+                </div>
+                <div class="example-card-content">
+                    <p>ROT47 比 ROT13 更廣泛，它使用 ASCII 表中從字符 33 ('!') 到字符 126 ('~') 的 94 個可打印字符：</p>
+                    <ol>
+                        <li>ASCII 字符集中從 33 到 126 的字符被映射為 0 到 93</li>
+                        <li>將每個字符值加 47，然後對 94 取模</li>
+                        <li>將結果映射回 ASCII 字符</li>
+                    </ol>
+                    <p>ROT47 不僅限於字母，還包括數字和特殊字符，使其應用更廣泛。</p>
+                </div>
+            </div>
+            
+            <div class="challenge-box">
+                <h3><i class="fas fa-puzzle-piece"></i> 實作提示</h3>
+                <p>解密 ROT 加密的文字可以使用以下線上工具：</p>
+                <ul>
+                    <li>ROT13: https://rot13.com/</li>
+                    <li>ROT47: https://www.dcode.fr/rot-47-cipher</li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- 瑪麗·史都華密碼 -->
+        <div class="slide" id="slide-8">
+            <div class="slide-header">
+                <i class="fas fa-crown"></i>
+                <h2>瑪麗·史都華密碼</h2>
+            </div>
+            
+            <div class="hand-drawn-box">
+                <div class="concept-title">
+                    <i class="fas fa-info-circle"></i>
+                    瑪麗·史都華密碼概述
+                </div>
+                <p class="content-text">
+                    瑪麗·史都華密碼是由蘇格蘭瑪麗女王（又被稱為瑪麗·史都華）所使用的一種歷史密碼。這種密碼是一種同音替代密碼，用於在她被囚禁期間與外界聯繫。
+                </p>
+            </div>
+            
+            <div class="two-column">
+                <div class="column">
+                    <div class="example-card">
+                        <div class="example-card-header">
+                            <i class="fas fa-history"></i>
+                            <h3>歷史背景</h3>
+                        </div>
+                        <div class="example-card-content">
+                            <ul>
+                                <li>瑪麗·史都華是十六世紀最著名和最具爭議的君主之一</li>
+                                <li>她僅六天就登上了蘇格蘭王位</li>
+                                <li>因涉入刺殺伊莉莎白一世的陰謀，使用密碼與外界聯繫</li>
+                                <li>信件遭英國間諜破譯，成為定罪關鍵</li>
+                                <li>在被囚於此地時，說出了「In my end is my beginning」（我死即我生）這句名言</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="column">
+                    <div class="example-card">
+                        <div class="example-card-header">
+                            <i class="fas fa-cogs"></i>
+                            <h3>加密原理</h3>
+                        </div>
+                        <div class="example-card-content">
+                            <p>瑪麗·史都華密碼是一種同音替代密碼：</p>
+                            <ul>
+                                <li>每個字母可對應多個不同符號，避免頻率分析</li>
+                                <li>使用特殊符號表示整個單詞（稱作「nulls」或「code words」）</li>
+                                <li>加入假符號混淆視聽</li>
+                                <li>密碼表會定期更改，增加安全性</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="image-container">
+                <img src="./assets/images/marry_queen_cypher_16x9.png" alt="瑪麗·史都華密碼示意圖" />
+            </div>
+            
+            <div class="example-card">
+                <div class="example-card-header">
+                    <i class="fas fa-lock"></i>
+                    <h3>密碼解析</h3>
+                </div>
+                <div class="example-card-content">
+                    <p>破解者托馬斯·費利普斯使用了以下方法破解密碼：</p>
+                    <ol>
+                        <li>頻率分析：識別最常出現的符號，可能代表常用字母如 E、T、A</li>
+                        <li>釣魚策略：故意傳遞部分已知信息，誘使對方回應並使用相同的詞語</li>
+                        <li>上下文猜測：根據上下文推斷某些詞語的可能含義</li>
+                    </ol>
+                    <p>這展現了古典密碼的脆弱性，也顯示了情報戰的重要性。</p>
+                </div>
+            </div>
+            
+            <div class="challenge-box">
+                <h3><i class="fas fa-puzzle-piece"></i> 實作提示</h3>
+                <p>解碼瑪麗·史都華密碼可以使用線上工具：</p>
+                <ul>
+                    <li>https://www.dcode.fr/mary-stuart-code</li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- 維吉尼爾密碼 -->
+        <div class="slide" id="slide-9">
+            <div class="slide-header">
+                <i class="fas fa-key"></i>
+                <h2>維吉尼爾密碼 (Vigenère Cipher)</h2>
+            </div>
+            
+            <div class="hand-drawn-box">
+                <div class="concept-title">
+                    <i class="fas fa-info-circle"></i>
+                    維吉尼爾密碼概述
+                </div>
+                <p class="content-text">
+                    維吉尼爾密碼（法語：Chiffre de Vigenère，又譯維熱納爾密碼）是使用一系列凱撒密碼組成密碼字母表的加密算法，屬於多表密碼的一種簡單形式。
+                </p>
+                <p class="content-text">
+                    維吉尼爾密碼比簡單的凱撒密碼更難破解，因為它使用不同的位移量來加密文本中的每個字母。
+                </p>
+            </div>
+            
+            <div class="two-column">
+                <div class="column">
+                    <div class="example-card">
+                        <div class="example-card-header">
+                            <i class="fas fa-cogs"></i>
+                            <h3>加密原理</h3>
+                        </div>
+                        <div class="example-card-content">
+                            <ol>
+                                <li>選擇一個關鍵詞（如 "LEMON"）</li>
+                                <li>將關鍵詞重複直到與明文等長（如 "LEMONLEMON..."）</li>
+                                <li>對明文中的每個字母，使用對應密鑰字母作為凱撒密碼的位移量</li>
+                                <li>不同位置的字母可能會有不同的位移量</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="column">
+                    <div class="example-card">
+                        <div class="example-card-header">
+                            <i class="fas fa-table"></i>
+                            <h3>維吉尼爾表</h3>
+                        </div>
+                        <div class="example-card-content">
+                            <p>維吉尼爾密碼使用一個表格（稱為維吉尼爾表）來執行加密：</p>
+                            <ul>
+                                <li>表格有 26 行和 26 列，對應英文字母表</li>
+                                <li>第一行是標準字母表，每行向左偏移一個位置</li>
+                                <li>使用明文字母和密鑰字母的交叉點作為密文字母</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="example-card">
+                <div class="example-card-header">
+                    <i class="fas fa-code"></i>
+                    <h3>維吉尼爾密碼範例</h3>
+                </div>
+                <div class="example-card-content">
+                    <div class="table-container">
+                        <table>
+                            <tr>
+                                <th>明文</th>
+                                <td>A</td><td>T</td><td>T</td><td>A</td><td>C</td><td>K</td><td>A</td><td>T</td><td>D</td><td>A</td><td>W</td><td>N</td>
+                            </tr>
+                            <tr>
+                                <th>密鑰</th>
+                                <td>L</td><td>E</td><td>M</td><td>O</td><td>N</td><td>L</td><td>E</td><td>M</td><td>O</td><td>N</td><td>L</td><td>E</td>
+                            </tr>
+                            <tr>
+                                <th>密文</th>
+                                <td>L</td><td>X</td><td>F</td><td>O</td><td>P</td><td>V</td><td>E</td><td>F</td><td>R</td><td>N</td><td>H</td><td>R</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <p>明文 "ATTACKATDAWN" 使用密鑰 "LEMON" 加密為 "LXFOPVEFRNHR"</p>
+                </div>
+            </div>
+            
+            <div class="process-flow">
+                <div class="process-step">
+                    <h4>選擇密鑰</h4>
+                    <p>如 "LEMON"</p>
+                </div>
+                <div class="process-step">
+                    <h4>重複密鑰</h4>
+                    <p>使其與明文等長</p>
+                </div>
+                <div class="process-step">
+                    <h4>逐字加密</h4>
+                    <p>使用維吉尼爾表</p>
+                </div>
+                <div class="process-step">
+                    <h4>生成密文</h4>
+                    <p>多表替換的結果</p>
+                </div>
+            </div>
+            
+            <div class="note-box">
+                <p><strong>安全性提醒：</strong> 維吉尼爾密碼比凱撒密碼更安全，但仍然可以通過卡西斯基測試和頻率分析等方法破解，特別是當密鑰較短或明文較長時。</p>
+            </div>
+            
+            <div class="challenge-box">
+                <h3><i class="fas fa-puzzle-piece"></i> 實作提示</h3>
+                <p>解密維吉尼爾密碼可以使用以下線上工具：</p>
+                <ul>
+                    <li>https://www.guballa.de/vigenere-solver</li>
+                    <li>https://www.dcode.fr/vigenere-cipher</li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- 挑戰題目 -->
+        <div class="slide" id="slide-10">
+            <div class="slide-header">
+                <i class="fas fa-puzzle-piece"></i>
+                <h2>挑戰題目</h2>
+            </div>
+            
+            <div class="hand-drawn-box">
+                <div class="concept-title">
+                    <i class="fas fa-info-circle"></i>
+                    挑戰題目說明
+                </div>
+                <p class="content-text">
+                    以下是高中跨校資安實務素養挑戰賽的個人賽題目。試著運用之前學到的知識來解決這些加密挑戰！
+                </p>
+            </div>
+            
+            <div class="challenge-box">
+                <h3><i class="fas fa-file-alt"></i> 題目一：文字變亂碼</h3>
+                <p><strong>描述：</strong> 小華向MIS人員說明，客戶寄來的信都變成了亂碼。您能幫他還原成正常的文字嗎？</p>
+                <p><strong>提示：</strong> 檢查亂碼末尾是否有 "=" 符號，可能是 Base64 編碼。</p>
+                <p><strong>解題工具：</strong> https://www.base64decode.org/</p>
+            </div>
+            
+            <div class="challenge-box">
+                <h3><i class="fas fa-crown"></i> 題目二：瑪麗皇后的智慧</h3>
+                <p><strong>描述：</strong> Mary Queen 瑪麗·史都華密碼。</p>
+                <p><strong>提示：</strong> 你了解附圖的文字意思嗎? 使用瑪麗·史都華密碼解碼器。</p>
+                <p><strong>解題工具：</strong> https://www.dcode.fr/mary-stuart-code</p>
+            </div>
+            
+            <div class="challenge-box">
+                <h3><i class="fas fa-key"></i> 題目三：維吉尼爾密碼</h3>
+                <p><strong>描述：</strong> 維吉尼爾密文為？Vhixoieemksktorywzvhxzijqni</p>
+                <p><strong>提示：</strong> "凱撒就是一切，但他把凱撒密法提升到了一個新的層次。"</p>
+                <p><strong>解題工具：</strong> https://www.guballa.de/vigenere-solver</p>
+            </div>
+            
+            <div class="note-box">
+                <p><strong>挑戰賽須知：</strong> 答案通常需要提交為 CTF{答案} 的格式。確保理解題目要求並仔細檢查你的答案！</p>
+            </div>
+            
+            <div class="example-card">
+                <div class="example-card-header">
+                    <i class="fas fa-tools"></i>
+                    <h3>實用資源</h3>
+                </div>
+                <div class="example-card-content">
+                    <p>這些線上工具可以幫助你解決各種編碼和加密挑戰：</p>
+                    <ul>
+                        <li>CyberChef: https://gchq.github.io/CyberChef/</li>
+                        <li>dCode: https://www.dcode.fr/</li>
+                        <li>Cryptii: https://cryptii.com/</li>
+                        <li>Base64 Decode: https://www.base64decode.org/</li>
+                        <li>Vigenère Solver: https://www.guballa.de/vigenere-solver</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <div class="navigation-buttons">
+            <button class="nav-button" id="prev-btn" disabled><i class="fas fa-arrow-left"></i> 上一頁</button>
+            <button class="nav-button" id="next-btn"><i class="fas fa-arrow-right"></i> 下一頁</button>
+        </div>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const slides = document.querySelectorAll('.slide');
+            const navItems = document.querySelectorAll('.nav-item');
+            const prevBtn = document.getElementById('prev-btn');
+            const nextBtn = document.getElementById('next-btn');
+            const sidebarTitle = document.querySelector('#sidebar-title');
+            let currentSlide = 1;
+
+            sidebarTitle.innerText = "編解碼與加解密";
+            
+            function showSlide(slideNumber) {
+                document.querySelector('.main-content').scrollTo({top: 0, left: 0, behavior: "instant"});
+                slides.forEach(slide => {
+                    slide.classList.remove('active');
+                });
+                navItems.forEach(item => {
+                    item.classList.remove('active');
+                });
+                
+                document.getElementById(`slide-${slideNumber}`).classList.add('active');
+                navItems[slideNumber - 1].classList.add('active');
+                
+                // Update navigation buttons
+                prevBtn.disabled = slideNumber === 1;
+                nextBtn.disabled = slideNumber === slides.length;
+
+                // update sidebar title
+                if (slideNumber == 1 || slideNumber == 10) {
+                    sidebarTitle.innerText = "編解碼與加解密";
+                } else if (slideNumber < 6) {
+                    sidebarTitle.innerText = "編碼與解碼";
+                } else {
+                    sidebarTitle.innerText = "加密與解密";
+                }
+            }
+            
+            // Event listeners for navigation menu
+            navItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    currentSlide = parseInt(this.dataset.slide);
+                    showSlide(currentSlide);
+                });
+            });
+            
+            // Event listeners for navigation buttons
+            prevBtn.addEventListener('click', function() {
+                if (currentSlide > 1) {
+                    currentSlide--;
+                    showSlide(currentSlide);
+                }
+            });
+            
+            nextBtn.addEventListener('click', function() {
+                if (currentSlide < slides.length) {
+                    currentSlide++;
+                    showSlide(currentSlide);
+                }
+            });
+            
+            // Keyboard navigation
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'ArrowLeft' && currentSlide > 1) {
+                    currentSlide--;
+                    showSlide(currentSlide);
+                } else if (e.key === 'ArrowRight' && currentSlide < slides.length) {
+                    currentSlide++;
+                    showSlide(currentSlide);
+                }
+            });
+            
+            // Initialize
+            showSlide(currentSlide);
+        });
+    </script>
+</body>
+</html>
